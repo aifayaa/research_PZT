@@ -1,0 +1,104 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\title{PZT Recipe Transferability and Reproduction Notes}
+\author{Project Documentation}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document summarizes the current PZT engine (directional S$\to$T ``few switches'') and provides exact reproduction commands for the 10K exact baseline, along with a brief results table. Legacy sections are omitted.
+\end{abstract}
+
+\section{Introduction}
+PZT models directional (S$\to$T) recipe transferability with a parts-based adaptation cost and an edit-sensitive score. It uses strict parsing, normalized ingredient heads, technique extraction, Sentence-Transformer embeddings (\texttt{all-MiniLM-L6-v2}), and either ANN or exact retrieval. The ranking prioritizes ``high similarity + few switches'' via recall and precision (false-alarm) terms plus a few-switches zone filter.
+
+\section{Dataset}
+\paragraph{Primary file.} Recipes are stored as NDJSON at:\\
+\texttt{SLM\_PZT\_Receipes/all\_recipes.ndjson}. Each line is a JSON object with a single \texttt{input} field containing title, ingredients (one per line), and instructions (one per line), separated by blank lines.
+
+\paragraph{Sample (200 docs).} A small sample is provided at:\\
+\texttt{SLM\_PZT\_Receipes/all\_recipes\_sample\_200.ndjson}.
+
+\paragraph{Example line.}
+\begin{verbatim}
+{"input": "My Cake\n\nIngredients:\n2 eggs\n100g sugar\n\nInstructions:\nMix...\nBake..."}
+\end{verbatim}
+
+\section{Reproduction (10K exact)}
+\paragraph{Environment.} Use the project venv to ensure \texttt{torch} and dependencies are available: \verb|SLM_PZT_Receipes/venv/bin/python|.
+
+\paragraph{Build (10K exact; no ANN).}
+\begin{verbatim}
+SLM_PZT_Receipes/venv/bin/python SLM_PZT_Receipes/pztpp_transfer.py build \
+  --ndjson SLM_PZT_Receipes/all_recipes.ndjson \
+  --limit 10000 \
+  --out-dir SLM_PZT_Receipes/pztpp_out_10k_noann \
+  --strict --preset quality --no-ann --no-head-neighbors
+\end{verbatim}
+
+\paragraph{Run (closest; for comparison with legacy MISS-only).}
+\begin{verbatim}
+SLM_PZT_Receipes/venv/bin/python SLM_PZT_Receipes/pztpp_transfer.py run \
+  --ndjson SLM_PZT_Receipes/all_recipes.ndjson \
+  --limit 10000 \
+  --out-dir SLM_PZT_Receipes/pztpp_out_10k_noann \
+  --preset quality --cand-k 1500 --mode closest
+\end{verbatim}
+
+\paragraph{Run (few\_switches; PZT default).}
+\begin{verbatim}
+SLM_PZT_Receipes/venv/bin/python SLM_PZT_Receipes/pztpp_transfer.py run \
+  --ndjson SLM_PZT_Receipes/all_recipes.ndjson \
+  --limit 10000 \
+  --out-dir SLM_PZT_Receipes/pztpp_out_10k_noann \
+  --preset quality --cand-k 1500 --mode few_switches
+\end{verbatim}
+
+\paragraph{Key outputs.} \verb|targets_to_sources.(jsonl|csv)| and \verb|sources_to_targets.(jsonl|csv)| with components, masses, costs, and both \texttt{pzt\_score} and \texttt{pzt\_edit\_score}.
+
+\section{10K Exact Baseline (Summary)}
+\begin{center}
+\begin{tabular}{l r}
+\hline
+Metric (Top-1 mean) & Value \\
+\hline
+Targets with $\ge1$ result & 6199 / 10000 \\
+$\text{pzt}$ & 0.8512 \\
+$\text{cov\_ingr}$ & 0.7825 \\
+$\text{cov\_ops}$ & 0.9730 \\
+$\text{sim\_instr}$ & 0.7233 \\
+$\text{sim\_full}$ & 0.7050 \\
+\hline
+\end{tabular}
+\end{center}
+
+Top missing heads (aggregated): staples/prep traces like butter, milk, salt, vanilla, flour, etc. PZT++-Edit further improves UX by filtering near-duplicates (zero-edit zone) and penalizing extra parts (precision).
+
+\section{Directory Structure (excerpt)}
+\begin{itemize}[leftmargin=*]
+  \item \texttt{SLM\_PZT\_Receipes/pztpp\_transfer.py} --- PZT++ CLI (build/run)
+  \item \texttt{SLM\_PZT\_Receipes/all\_recipes.ndjson} --- full dataset (NDJSON)
+  \item \texttt{SLM\_PZT\_Receipes/all\_recipes\_sample\_200.ndjson} --- sample (200)
+  \item \texttt{SLM\_PZT\_Receipes/pztpp\_out\_10k\_noann} --- 10K exact outputs
+\end{itemize}
+
+\end{document}
