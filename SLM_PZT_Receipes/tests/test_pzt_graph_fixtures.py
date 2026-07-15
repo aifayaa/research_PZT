@@ -146,9 +146,13 @@ class PZTGraphFixtureTests(unittest.TestCase):
         source_units = canonical_ids(case.source_recipe.graph)
         target_units = canonical_ids(case.target_recipe.graph)
 
-        for unit in ["ING_FLOUR", "ING_EGG", "ING_SUGAR", "OP_MIX", "OP_BAKE", "STATE_BATTER", "RESULT_QUICK_BREAD"]:
+        for unit in ["ING_FLOUR", "ING_EGG", "ING_SUGAR", "OP_MIX", "OP_BAKE", "STATE_BATTER"]:
             self.assertIn(unit, source_units)
             self.assertIn(unit, target_units)
+        source_results = [node for node in case.source_recipe.graph.nodes if node.kind == "result"]
+        target_results = [node for node in case.target_recipe.graph.nodes if node.kind == "result"]
+        self.assertEqual(source_results[0].metadata["parent_canonical_id"], "RESULT_QUICK_BREAD")
+        self.assertEqual(target_results[0].metadata["parent_canonical_id"], "RESULT_QUICK_BREAD")
         self.assertIn("ING_BANANA", source_units)
         self.assertIn("ING_ZUCCHINI", target_units)
         self.assertIn("OP_MASH", source_units)

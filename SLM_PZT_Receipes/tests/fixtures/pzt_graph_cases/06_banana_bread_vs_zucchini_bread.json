@@ -13,11 +13,11 @@
         {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
         {"id": "ing_sugar", "kind": "ingredient", "label": "sugar", "canonical_id": "ING_SUGAR", "source": "ingredient_line", "metadata": {}},
         {"id": "op_mash", "kind": "operation", "label": "mash", "canonical_id": "OP_MASH", "source": "instruction_step", "metadata": {}},
-        {"id": "state_prepared_fruit", "kind": "state", "label": "mashed banana", "canonical_id": "STATE_PREPARED_QUICK_BREAD_PRODUCE", "source": "instruction_step", "metadata": {"specific_state": "STATE_MASHED_BANANA"}},
+        {"id": "state_prepared_fruit", "kind": "state", "label": "mashed banana", "canonical_id": "STATE_MASHED_BANANA", "source": "instruction_step", "metadata": {"parent_canonical_id": "STATE_PREPARED_QUICK_BREAD_PRODUCE"}},
         {"id": "op_mix", "kind": "operation", "label": "mix", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {}},
         {"id": "state_batter", "kind": "state", "label": "batter", "canonical_id": "STATE_BATTER", "source": "instruction_step", "metadata": {}},
         {"id": "op_bake", "kind": "operation", "label": "bake", "canonical_id": "OP_BAKE", "source": "instruction_step", "metadata": {}},
-        {"id": "result_quick_bread", "kind": "result", "label": "banana bread", "canonical_id": "RESULT_QUICK_BREAD", "source": "manual_fixture", "metadata": {"specific_result": "RESULT_BANANA_BREAD"}}
+        {"id": "result_quick_bread", "kind": "result", "label": "banana bread", "canonical_id": "RESULT_BANANA_BREAD", "source": "manual_fixture", "metadata": {"parent_canonical_id": "RESULT_QUICK_BREAD"}}
       ],
       "edges": [
         {"id": "e1", "source": "ing_banana", "target": "op_mash", "relation": "ingredient_to_operation", "metadata": {}},
@@ -49,11 +49,11 @@
         {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
         {"id": "ing_sugar", "kind": "ingredient", "label": "sugar", "canonical_id": "ING_SUGAR", "source": "ingredient_line", "metadata": {}},
         {"id": "op_grate", "kind": "operation", "label": "grate", "canonical_id": "OP_GRATE", "source": "instruction_step", "metadata": {}},
-        {"id": "state_prepared_fruit", "kind": "state", "label": "grated zucchini", "canonical_id": "STATE_PREPARED_QUICK_BREAD_PRODUCE", "source": "instruction_step", "metadata": {"specific_state": "STATE_GRATED_ZUCCHINI"}},
+        {"id": "state_prepared_fruit", "kind": "state", "label": "grated zucchini", "canonical_id": "STATE_GRATED_ZUCCHINI", "source": "instruction_step", "metadata": {"parent_canonical_id": "STATE_PREPARED_QUICK_BREAD_PRODUCE"}},
         {"id": "op_mix", "kind": "operation", "label": "mix", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {}},
         {"id": "state_batter", "kind": "state", "label": "batter", "canonical_id": "STATE_BATTER", "source": "instruction_step", "metadata": {}},
         {"id": "op_bake", "kind": "operation", "label": "bake", "canonical_id": "OP_BAKE", "source": "instruction_step", "metadata": {}},
-        {"id": "result_quick_bread", "kind": "result", "label": "zucchini bread", "canonical_id": "RESULT_QUICK_BREAD", "source": "manual_fixture", "metadata": {"specific_result": "RESULT_ZUCCHINI_BREAD"}}
+        {"id": "result_quick_bread", "kind": "result", "label": "zucchini bread", "canonical_id": "RESULT_ZUCCHINI_BREAD", "source": "manual_fixture", "metadata": {"parent_canonical_id": "RESULT_QUICK_BREAD"}}
       ],
       "edges": [
         {"id": "e1", "source": "ing_zucchini", "target": "op_grate", "relation": "ingredient_to_operation", "metadata": {}},
@@ -74,7 +74,7 @@
     }
   },
   "expected": {
-    "must_match_units": ["ING_FLOUR", "ING_EGG", "ING_SUGAR", "OP_MIX", "OP_BAKE", "STATE_BATTER", "RESULT_QUICK_BREAD"],
+    "must_match_units": ["ING_FLOUR", "ING_EGG", "ING_SUGAR", "OP_MIX", "OP_BAKE", "STATE_BATTER"],
     "must_not_match_units": [["ING_BANANA", "ING_ZUCCHINI"], ["OP_MASH", "OP_GRATE"]],
     "expected_difference_type": "strong_non_trivial_transfer",
     "expected_future_score_behavior": "future PZT score should be medium-high or high because quick-bread structure is conserved",

@@ -1,0 +1,27 @@
+name: PZT V2 refutation gates
+
+on:
+  push:
+    branches: [main, feature/pzt-v2-refutation-pipeline]
+  pull_request:
+
+jobs:
+  unit-and-fixture-gates:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: SLM_PZT_Receipes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run deterministic V2 gates
+        run: python -m unittest discover -s tests -v
+      - name: Smoke corpus gates
+        run: |
+          python -m pzt_v2.run_corpus_gates \
+            --input all_recipes_sample_200.ndjson \
+            --limit 200 \
+            --output-dir /tmp/pzt-v2-ci-gates \
+            --run-id ci-200

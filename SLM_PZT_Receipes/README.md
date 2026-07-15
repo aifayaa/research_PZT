@@ -45,3 +45,32 @@ For the slide-aligned experiments (10K exact run, measurement comparison), see `
 - `CODE_DOC.md`: module-by-module explanation of how parsing, embeddings, and scoring components connect to the PZT++ narrative.
 - `EXPERIMENTS.md`: step-by-step reproduction of the “10K exact” comparisons, gate settings, and few-switch band evaluation from the slides.
 - `REVIEW.md`: a short audit that ties the code artifacts to the slide deck and flags the experiments we verified.
+
+## PZT V2 refutation pipeline
+
+The historical `pztpp_transfer.py` engine remains a reproducible baseline. The
+new default candidate lives under `pzt_v2/` and is governed by the scientific
+contract in `docs/pzt_model_contract_v2.md` and the hard-gate protocol in
+`docs/pzt_v2_refutation_protocol.md`.
+
+Typical validated progression:
+
+```sh
+python -m unittest discover -s tests
+python -m pzt_v2.run_corpus_gates --input all_recipes.ndjson --limit 20000 \
+  --output-dir /tmp/pzt_v2_gates --run-id pzt-v2-20k
+python -m pzt_v2.run_vocabulary_mining --input all_recipes.ndjson --limit 20000 \
+  --output-dir /tmp/pzt_v2_vocab
+python -m pzt_v2.run_vocabulary_gate --input all_recipes.ndjson \
+  --vocabulary-dir /tmp/pzt_v2_vocab --output-dir /tmp/pzt_v2_registry \
+  --manifest /tmp/pzt_v2_registry/manifest.json --run-id pzt-v2-20k \
+  --upstream-manifest /tmp/pzt_v2_gates/extraction_manifest.json
+python -m pzt_v2.run_pair_model --input all_recipes.ndjson --recipe-limit 200 \
+  --pair-count 10000 --output-dir /tmp/pzt_v2_pairs \
+  --manifest /tmp/pzt_v2_pairs/manifest.json --run-id pzt-v2-10k \
+  --upstream-manifest /tmp/pzt_v2_gates/extraction_manifest.json \
+  --upstream-manifest /tmp/pzt_v2_registry/manifest.json
+```
+
+Use `python -m pzt_v2.verify_evidence <manifest>` to verify hashes and hard-gate
+status before consuming an artifact.
