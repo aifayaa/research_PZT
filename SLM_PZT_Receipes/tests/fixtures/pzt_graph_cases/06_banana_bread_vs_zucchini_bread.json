@@ -1,0 +1,83 @@
+{
+  "case_id": "06_banana_bread_vs_zucchini_bread",
+  "description": "Strong non-trivial transfer: quick bread structure is conserved while produce and prep operation differ.",
+  "source_recipe": {
+    "recipe_id": "fixture_06_source",
+    "title": "Banana Bread",
+    "raw_ingredients": ["banana", "flour", "egg", "sugar"],
+    "raw_instructions": ["Mash banana.", "Mix with flour, egg and sugar.", "Bake batter."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_banana", "kind": "ingredient", "label": "banana", "canonical_id": "ING_BANANA", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_flour", "kind": "ingredient", "label": "flour", "canonical_id": "ING_FLOUR", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_sugar", "kind": "ingredient", "label": "sugar", "canonical_id": "ING_SUGAR", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_mash", "kind": "operation", "label": "mash", "canonical_id": "OP_MASH", "source": "instruction_step", "metadata": {}},
+        {"id": "state_prepared_fruit", "kind": "state", "label": "mashed banana", "canonical_id": "STATE_PREPARED_QUICK_BREAD_PRODUCE", "source": "instruction_step", "metadata": {"specific_state": "STATE_MASHED_BANANA"}},
+        {"id": "op_mix", "kind": "operation", "label": "mix", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {}},
+        {"id": "state_batter", "kind": "state", "label": "batter", "canonical_id": "STATE_BATTER", "source": "instruction_step", "metadata": {}},
+        {"id": "op_bake", "kind": "operation", "label": "bake", "canonical_id": "OP_BAKE", "source": "instruction_step", "metadata": {}},
+        {"id": "result_quick_bread", "kind": "result", "label": "banana bread", "canonical_id": "RESULT_QUICK_BREAD", "source": "manual_fixture", "metadata": {"specific_result": "RESULT_BANANA_BREAD"}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_banana", "target": "op_mash", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "op_mash", "target": "state_prepared_fruit", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e3", "source": "state_prepared_fruit", "target": "op_mix", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e4", "source": "ing_flour", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e5", "source": "ing_egg", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e6", "source": "ing_sugar", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e7", "source": "op_mix", "target": "state_batter", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e8", "source": "state_batter", "target": "op_bake", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e9", "source": "op_bake", "target": "result_quick_bread", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Mash banana.", "operation_nodes": ["op_mash"]},
+        {"id": "step_2", "raw_text": "Mix with flour, egg and sugar.", "operation_nodes": ["op_mix"]},
+        {"id": "step_3", "raw_text": "Bake batter.", "operation_nodes": ["op_bake"]}
+      ]
+    }
+  },
+  "target_recipe": {
+    "recipe_id": "fixture_06_target",
+    "title": "Zucchini Bread",
+    "raw_ingredients": ["zucchini", "flour", "egg", "sugar"],
+    "raw_instructions": ["Grate zucchini.", "Mix with flour, egg and sugar.", "Bake batter."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_zucchini", "kind": "ingredient", "label": "zucchini", "canonical_id": "ING_ZUCCHINI", "source": "ingredient_line", "metadata": {"synonym": "courgette"}},
+        {"id": "ing_flour", "kind": "ingredient", "label": "flour", "canonical_id": "ING_FLOUR", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_sugar", "kind": "ingredient", "label": "sugar", "canonical_id": "ING_SUGAR", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_grate", "kind": "operation", "label": "grate", "canonical_id": "OP_GRATE", "source": "instruction_step", "metadata": {}},
+        {"id": "state_prepared_fruit", "kind": "state", "label": "grated zucchini", "canonical_id": "STATE_PREPARED_QUICK_BREAD_PRODUCE", "source": "instruction_step", "metadata": {"specific_state": "STATE_GRATED_ZUCCHINI"}},
+        {"id": "op_mix", "kind": "operation", "label": "mix", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {}},
+        {"id": "state_batter", "kind": "state", "label": "batter", "canonical_id": "STATE_BATTER", "source": "instruction_step", "metadata": {}},
+        {"id": "op_bake", "kind": "operation", "label": "bake", "canonical_id": "OP_BAKE", "source": "instruction_step", "metadata": {}},
+        {"id": "result_quick_bread", "kind": "result", "label": "zucchini bread", "canonical_id": "RESULT_QUICK_BREAD", "source": "manual_fixture", "metadata": {"specific_result": "RESULT_ZUCCHINI_BREAD"}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_zucchini", "target": "op_grate", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "op_grate", "target": "state_prepared_fruit", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e3", "source": "state_prepared_fruit", "target": "op_mix", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e4", "source": "ing_flour", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e5", "source": "ing_egg", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e6", "source": "ing_sugar", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e7", "source": "op_mix", "target": "state_batter", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e8", "source": "state_batter", "target": "op_bake", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e9", "source": "op_bake", "target": "result_quick_bread", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Grate zucchini.", "operation_nodes": ["op_grate"]},
+        {"id": "step_2", "raw_text": "Mix with flour, egg and sugar.", "operation_nodes": ["op_mix"]},
+        {"id": "step_3", "raw_text": "Bake batter.", "operation_nodes": ["op_bake"]}
+      ]
+    }
+  },
+  "expected": {
+    "must_match_units": ["ING_FLOUR", "ING_EGG", "ING_SUGAR", "OP_MIX", "OP_BAKE", "STATE_BATTER", "RESULT_QUICK_BREAD"],
+    "must_not_match_units": [["ING_BANANA", "ING_ZUCCHINI"], ["OP_MASH", "OP_GRATE"]],
+    "expected_difference_type": "strong_non_trivial_transfer",
+    "expected_future_score_behavior": "future PZT score should be medium-high or high because quick-bread structure is conserved",
+    "notes": "This case represents a useful PZT zone: close structure, non-identical produce and preparation."
+  }
+}

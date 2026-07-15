@@ -1,0 +1,61 @@
+{
+  "case_id": "02_tomato_vs_chopped_tomato",
+  "description": "Same ingredient head but different preparation state: chopped tomato preserves state and implied chop operation.",
+  "source_recipe": {
+    "recipe_id": "fixture_02_source",
+    "title": "Plain Tomato",
+    "raw_ingredients": ["tomato"],
+    "raw_instructions": ["Use tomato."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_tomato", "kind": "ingredient", "label": "tomato", "canonical_id": "ING_TOMATO", "source": "ingredient_line", "metadata": {}},
+        {"id": "result_plain_tomato", "kind": "result", "label": "plain tomato", "canonical_id": "RESULT_PLAIN_TOMATO", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_tomato", "target": "result_plain_tomato", "relation": "state_to_result", "metadata": {"direct_input": true}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Use tomato.", "operation_nodes": []}
+      ]
+    }
+  },
+  "target_recipe": {
+    "recipe_id": "fixture_02_target",
+    "title": "Chopped Tomato",
+    "raw_ingredients": ["chopped tomato"],
+    "raw_instructions": ["Use chopped tomato."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_tomato", "kind": "ingredient", "label": "tomato", "canonical_id": "ING_TOMATO", "source": "ingredient_line", "metadata": {}},
+        {
+          "id": "state_chopped_tomato",
+          "kind": "state",
+          "label": "chopped tomato",
+          "canonical_id": "STATE_CHOPPED_TOMATO",
+          "source": "ingredient_modifier",
+          "metadata": {
+            "base_object": "ING_TOMATO",
+            "preparation_state": "STATE_CHOPPED",
+            "implied_operation": "OP_CHOP",
+            "explicit_in_instruction": false
+          }
+        },
+        {"id": "result_chopped_tomato", "kind": "result", "label": "chopped tomato ready to use", "canonical_id": "RESULT_CHOPPED_TOMATO", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_tomato", "target": "state_chopped_tomato", "relation": "ingredient_to_state", "metadata": {"implied_operation": "OP_CHOP"}},
+        {"id": "e2", "source": "state_chopped_tomato", "target": "result_chopped_tomato", "relation": "state_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Use chopped tomato.", "operation_nodes": []}
+      ]
+    }
+  },
+  "expected": {
+    "must_match_units": ["ING_TOMATO"],
+    "must_not_match_units": [["ING_TOMATO", "STATE_CHOPPED_TOMATO"]],
+    "expected_difference_type": "same_base_object_preparation_state_inserted",
+    "expected_future_score_behavior": "future distance should be small but non-zero",
+    "notes": "This fixture prevents chopped tomato from collapsing into a plain ingredient head."
+  }
+}

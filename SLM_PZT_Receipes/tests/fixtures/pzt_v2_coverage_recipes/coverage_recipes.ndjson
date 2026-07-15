@@ -1,0 +1,44 @@
+{"input": "Banana Bread\n\nIngredients:\nmashed banana\nflour\negg\nsugar\n\nInstructions:\nMix banana, flour, egg and sugar.\nBake the batter."}
+{"input": "Zucchini Bread\n\nIngredients:\ngrated zucchini\nflour\negg\nsugar\n\nInstructions:\nGrate zucchini.\nMix zucchini, flour, egg and sugar.\nBake the batter."}
+{"input": "Courgette Bread\n\nIngredients:\ngrated courgette\nflour\negg\nsugar\n\nInstructions:\nCombine courgette, flour, egg and sugar.\nBake the batter."}
+{"input": "Carrot Cake\n\nIngredients:\ngrated carrots\nflour\negg\nsugar\noil\n\nInstructions:\nGrate carrots.\nMix carrots, flour, egg and sugar.\nBake cake."}
+{"input": "Pancakes\n\nIngredients:\nflour\negg\nmilk\nsugar\nmelted butter\n\nInstructions:\nWhisk flour, egg and milk.\nPour batter.\nCook pancakes in a pan."}
+{"input": "Crepe Batter\n\nIngredients:\nflour\negg\nmilk\nmelted butter\n\nInstructions:\nWhisk flour, egg and milk.\nRest batter.\nCook batter in a pan."}
+{"input": "Waffle Batter\n\nIngredients:\nflour\negg\nmilk\nsugar\nmelted butter\n\nInstructions:\nCombine flour, egg and milk.\nFold melted butter.\nCook batter."}
+{"input": "Chocolate Cake\n\nIngredients:\nflour\negg\nsugar\nbutter\nchocolate\ncocoa\n\nInstructions:\nMelt chocolate.\nMix flour, egg, sugar and cocoa.\nBake cake."}
+{"input": "Cookies\n\nIngredients:\nflour\negg\nsugar\nbutter\nchocolate\n\nInstructions:\nMix flour, egg and sugar.\nFold chocolate.\nBake cookies."}
+{"input": "Scrambled Eggs\n\nIngredients:\nbeaten eggs\nbutter\nsalt\n\nInstructions:\nBeat the eggs.\nMelt butter.\nCook eggs in a pan."}
+{"input": "Boiled Egg\n\nIngredients:\negg\nwater\nsalt\n\nInstructions:\nBoil egg.\nDrain water.\nServe egg."}
+{"input": "Omelette\n\nIngredients:\nbeaten eggs\ncheese\nbutter\npepper\n\nInstructions:\nBeat eggs.\nCook eggs in a pan.\nFold omelette."}
+{"input": "Poached Egg\n\nIngredients:\negg\nwater\nvinegar\nsalt\n\nInstructions:\nBoil water.\nAdd vinegar.\nCook egg."}
+{"input": "Tomato Sauce\n\nIngredients:\nchopped tomatoes\nminced garlic\noil\nsalt\npepper\n\nInstructions:\nSaute garlic.\nAdd tomatoes.\nSimmer sauce."}
+{"input": "Tomato Soup\n\nIngredients:\nchopped tomatoes\nonion\nstock\ncream\n\nInstructions:\nCook onion.\nAdd tomatoes and stock.\nSimmer soup.\nBlend soup."}
+{"input": "Bechamel Sauce\n\nIngredients:\nbutter\nflour\nmilk\nsalt\npepper\n\nInstructions:\nMelt butter.\nAdd flour.\nWhisk milk.\nCook sauce."}
+{"input": "Pesto\n\nIngredients:\ncrushed garlic\noil\ncheese\nsalt\n\nInstructions:\nCrush garlic.\nBlend garlic, oil and cheese.\nSeason pesto."}
+{"input": "Chopped Salad\n\nIngredients:\nchopped tomatoes\nsliced onion\nlettuce\noil\nvinegar\n\nInstructions:\nChop lettuce.\nCombine tomatoes, onion and lettuce.\nSeason salad."}
+{"input": "Coleslaw\n\nIngredients:\nsliced cabbage\ngrated carrot\nvinegar\noil\nsalt\n\nInstructions:\nSlice cabbage.\nGrate carrot.\nMix cabbage and carrot."}
+{"input": "Guacamole\n\nIngredients:\nmashed avocado\nminced garlic\nlemon juice\nsalt\n\nInstructions:\nMash avocado.\nAdd garlic and lemon juice.\nSeason guacamole."}
+{"input": "Vinaigrette\n\nIngredients:\noil\nvinegar\nsalt\npepper\n\nInstructions:\nWhisk oil and vinegar.\nSeason vinaigrette."}
+{"input": "Chicken Stir Fry\n\nIngredients:\nsliced chicken\nvegetables\nsauce\noil\n\nInstructions:\nStir-fry chicken and vegetables.\nAdd sauce.\nServe stir fry."}
+{"input": "Tofu Stir Fry\n\nIngredients:\nsliced tofu\nvegetables\nsauce\noil\n\nInstructions:\nStir-fry tofu and vegetables.\nAdd sauce.\nServe stir fry."}
+{"input": "Fried Rice\n\nIngredients:\nrice\negg\nvegetables\noil\nsauce\n\nInstructions:\nFry rice and vegetables.\nAdd egg.\nStir rice."}
+{"input": "Sauteed Mushrooms\n\nIngredients:\nsliced mushrooms\nbutter\nminced garlic\nsalt\n\nInstructions:\nSaute mushrooms.\nAdd garlic.\nSeason mushrooms."}
+{"input": "Roasted Potatoes\n\nIngredients:\ndiced potatoes\noil\nsalt\npepper\n\nInstructions:\nRoast potatoes.\nSeason with pepper.\nServe potatoes."}
+{"input": "Baked Fish\n\nIngredients:\nfish\noil\nlemon juice\nsalt\npepper\n\nInstructions:\nSeason fish.\nBake fish.\nServe fish."}
+{"input": "Roast Chicken\n\nIngredients:\nchicken\noil\nsalt\npepper\n\nInstructions:\nSeason chicken.\nRoast chicken.\nRest chicken."}
+{"input": "Vegetable Gratin\n\nIngredients:\nsliced vegetables\ncream\ncheese\nsalt\n\nInstructions:\nLayer vegetables.\nPour cream.\nBake gratin."}
+{"input": "Boiled Pasta\n\nIngredients:\npasta\nwater\nsalt\noil\n\nInstructions:\nBoil water.\nAdd pasta.\nDrain pasta."}
+{"input": "Steamed Rice\n\nIngredients:\nrice\nwater\nsalt\n\nInstructions:\nSteam rice.\nRest rice.\nServe rice."}
+{"input": "Lentil Stew\n\nIngredients:\nlentils\nonion\ncarrot\nstock\nsalt\n\nInstructions:\nCook onion.\nAdd lentils and stock.\nSimmer stew."}
+{"input": "Vegetable Curry\n\nIngredients:\nvegetables\nonion\ngarlic\nstock\nrice\n\nInstructions:\nSaute onion.\nAdd vegetables and stock.\nSimmer curry.\nServe with rice."}
+{"input": "Pizza Dough\n\nIngredients:\nflour\nwater\nyeast\nsalt\noil\n\nInstructions:\nMix flour, water and yeast.\nKnead dough.\nRest dough.\nLet dough rise."}
+{"input": "Bread Dough\n\nIngredients:\nflour\nwater\nyeast\nsalt\n\nInstructions:\nCombine flour and water.\nKnead dough.\nLet dough rise.\nBake bread."}
+{"input": "Custard\n\nIngredients:\negg\nmilk\nsugar\nvanilla\n\nInstructions:\nWhisk egg and sugar.\nAdd milk.\nCook custard."}
+{"input": "Creme Anglaise\n\nIngredients:\negg\nmilk\nsugar\nvanilla\ncream\n\nInstructions:\nWhisk egg and sugar.\nSimmer milk and cream.\nCook sauce."}
+{"input": "Risotto\n\nIngredients:\nrice\nstock\nbutter\ncheese\nonion\n\nInstructions:\nCook onion.\nAdd rice.\nAdd stock.\nStir rice."}
+{"input": "Rice Pudding\n\nIngredients:\nrice\nmilk\nsugar\nvanilla\n\nInstructions:\nSimmer rice and milk.\nStir sugar.\nServe pudding."}
+{"input": "Mashed Potatoes\n\nIngredients:\nboiled potatoes\nmilk\nbutter\nsalt\n\nInstructions:\nBoil potatoes.\nMash potatoes.\nAdd milk and butter."}
+{"input": "Fried Potatoes\n\nIngredients:\nsliced potatoes\noil\nsalt\n\nInstructions:\nSlice potatoes.\nFry potatoes.\nDrain potatoes."}
+{"input": "Green Beans\n\nIngredients:\ngreen beans\nwater\nsalt\nbutter\n\nInstructions:\nBoil beans.\nDrain beans.\nAdd butter."}
+{"input": "Mushroom Soup\n\nIngredients:\nsliced mushrooms\nonion\nstock\ncream\n\nInstructions:\nCook onion.\nAdd mushrooms and stock.\nSimmer soup.\nBlend soup."}
+{"input": "Garlic Bread\n\nIngredients:\nbread\nmelted butter\nminced garlic\ncheese\n\nInstructions:\nMelt butter.\nAdd garlic.\nBake bread."}

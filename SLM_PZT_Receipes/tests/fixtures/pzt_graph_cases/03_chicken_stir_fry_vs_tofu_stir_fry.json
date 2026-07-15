@@ -1,0 +1,69 @@
+{
+  "case_id": "03_chicken_stir_fry_vs_tofu_stir_fry",
+  "description": "Same operational structure with different protein ingredient.",
+  "source_recipe": {
+    "recipe_id": "fixture_03_source",
+    "title": "Chicken Stir-Fry",
+    "raw_ingredients": ["chicken", "vegetables", "sauce"],
+    "raw_instructions": ["Cut chicken and vegetables.", "Stir-fry with sauce."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_chicken", "kind": "ingredient", "label": "chicken", "canonical_id": "ING_CHICKEN", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_vegetable", "kind": "ingredient", "label": "vegetables", "canonical_id": "ING_VEGETABLE", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_sauce", "kind": "ingredient", "label": "sauce", "canonical_id": "ING_SAUCE", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_cut", "kind": "operation", "label": "cut", "canonical_id": "OP_CUT", "source": "instruction_step", "metadata": {}},
+        {"id": "state_cut_inputs", "kind": "state", "label": "cut chicken and vegetables", "canonical_id": "STATE_CUT_STIR_FRY_INPUTS", "source": "instruction_step", "metadata": {}},
+        {"id": "op_stir_fry", "kind": "operation", "label": "stir-fry", "canonical_id": "OP_STIR_FRY", "source": "instruction_step", "metadata": {}},
+        {"id": "result_stir_fry", "kind": "result", "label": "chicken stir-fry", "canonical_id": "RESULT_STIR_FRY", "source": "manual_fixture", "metadata": {"main_object": "ING_CHICKEN"}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_chicken", "target": "op_cut", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "ing_vegetable", "target": "op_cut", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e3", "source": "op_cut", "target": "state_cut_inputs", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e4", "source": "state_cut_inputs", "target": "op_stir_fry", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e5", "source": "ing_sauce", "target": "op_stir_fry", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e6", "source": "op_stir_fry", "target": "result_stir_fry", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Cut chicken and vegetables.", "operation_nodes": ["op_cut"]},
+        {"id": "step_2", "raw_text": "Stir-fry with sauce.", "operation_nodes": ["op_stir_fry"]}
+      ]
+    }
+  },
+  "target_recipe": {
+    "recipe_id": "fixture_03_target",
+    "title": "Tofu Stir-Fry",
+    "raw_ingredients": ["tofu", "vegetables", "sauce"],
+    "raw_instructions": ["Cut tofu and vegetables.", "Stir-fry with sauce."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_tofu", "kind": "ingredient", "label": "tofu", "canonical_id": "ING_TOFU", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_vegetable", "kind": "ingredient", "label": "vegetables", "canonical_id": "ING_VEGETABLE", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_sauce", "kind": "ingredient", "label": "sauce", "canonical_id": "ING_SAUCE", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_cut", "kind": "operation", "label": "cut", "canonical_id": "OP_CUT", "source": "instruction_step", "metadata": {}},
+        {"id": "state_cut_inputs", "kind": "state", "label": "cut tofu and vegetables", "canonical_id": "STATE_CUT_STIR_FRY_INPUTS", "source": "instruction_step", "metadata": {}},
+        {"id": "op_stir_fry", "kind": "operation", "label": "stir-fry", "canonical_id": "OP_STIR_FRY", "source": "instruction_step", "metadata": {}},
+        {"id": "result_stir_fry", "kind": "result", "label": "tofu stir-fry", "canonical_id": "RESULT_STIR_FRY", "source": "manual_fixture", "metadata": {"main_object": "ING_TOFU"}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_tofu", "target": "op_cut", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "ing_vegetable", "target": "op_cut", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e3", "source": "op_cut", "target": "state_cut_inputs", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e4", "source": "state_cut_inputs", "target": "op_stir_fry", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e5", "source": "ing_sauce", "target": "op_stir_fry", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e6", "source": "op_stir_fry", "target": "result_stir_fry", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Cut tofu and vegetables.", "operation_nodes": ["op_cut"]},
+        {"id": "step_2", "raw_text": "Stir-fry with sauce.", "operation_nodes": ["op_stir_fry"]}
+      ]
+    }
+  },
+  "expected": {
+    "must_match_units": ["ING_VEGETABLE", "ING_SAUCE", "OP_CUT", "OP_STIR_FRY", "RESULT_STIR_FRY"],
+    "must_not_match_units": [["ING_CHICKEN", "ING_TOFU"]],
+    "expected_difference_type": "ingredient_substitution_structure_conserved",
+    "expected_future_score_behavior": "future PZT score should be high because operation structure is conserved",
+    "notes": "Protein substitution should not erase shared transformation structure."
+  }
+}

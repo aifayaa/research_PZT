@@ -1,0 +1,83 @@
+{
+  "case_id": "05_identity_banana_bread",
+  "description": "Identity case: same banana bread graph on source and target.",
+  "source_recipe": {
+    "recipe_id": "fixture_05_source",
+    "title": "Banana Bread",
+    "raw_ingredients": ["banana", "flour", "egg", "sugar"],
+    "raw_instructions": ["Mash banana.", "Mix with flour, egg and sugar.", "Bake batter."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_banana", "kind": "ingredient", "label": "banana", "canonical_id": "ING_BANANA", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_flour", "kind": "ingredient", "label": "flour", "canonical_id": "ING_FLOUR", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_sugar", "kind": "ingredient", "label": "sugar", "canonical_id": "ING_SUGAR", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_mash", "kind": "operation", "label": "mash", "canonical_id": "OP_MASH", "source": "instruction_step", "metadata": {}},
+        {"id": "state_mashed_banana", "kind": "state", "label": "mashed banana", "canonical_id": "STATE_MASHED_BANANA", "source": "instruction_step", "metadata": {}},
+        {"id": "op_mix", "kind": "operation", "label": "mix", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {}},
+        {"id": "state_batter", "kind": "state", "label": "batter", "canonical_id": "STATE_BATTER", "source": "instruction_step", "metadata": {}},
+        {"id": "op_bake", "kind": "operation", "label": "bake", "canonical_id": "OP_BAKE", "source": "instruction_step", "metadata": {}},
+        {"id": "result_banana_bread", "kind": "result", "label": "banana bread", "canonical_id": "RESULT_BANANA_BREAD", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_banana", "target": "op_mash", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "op_mash", "target": "state_mashed_banana", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e3", "source": "state_mashed_banana", "target": "op_mix", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e4", "source": "ing_flour", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e5", "source": "ing_egg", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e6", "source": "ing_sugar", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e7", "source": "op_mix", "target": "state_batter", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e8", "source": "state_batter", "target": "op_bake", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e9", "source": "op_bake", "target": "result_banana_bread", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Mash banana.", "operation_nodes": ["op_mash"]},
+        {"id": "step_2", "raw_text": "Mix with flour, egg and sugar.", "operation_nodes": ["op_mix"]},
+        {"id": "step_3", "raw_text": "Bake batter.", "operation_nodes": ["op_bake"]}
+      ]
+    }
+  },
+  "target_recipe": {
+    "recipe_id": "fixture_05_target",
+    "title": "Banana Bread",
+    "raw_ingredients": ["banana", "flour", "egg", "sugar"],
+    "raw_instructions": ["Mash banana.", "Mix with flour, egg and sugar.", "Bake batter."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_banana", "kind": "ingredient", "label": "banana", "canonical_id": "ING_BANANA", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_flour", "kind": "ingredient", "label": "flour", "canonical_id": "ING_FLOUR", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_sugar", "kind": "ingredient", "label": "sugar", "canonical_id": "ING_SUGAR", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_mash", "kind": "operation", "label": "mash", "canonical_id": "OP_MASH", "source": "instruction_step", "metadata": {}},
+        {"id": "state_mashed_banana", "kind": "state", "label": "mashed banana", "canonical_id": "STATE_MASHED_BANANA", "source": "instruction_step", "metadata": {}},
+        {"id": "op_mix", "kind": "operation", "label": "mix", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {}},
+        {"id": "state_batter", "kind": "state", "label": "batter", "canonical_id": "STATE_BATTER", "source": "instruction_step", "metadata": {}},
+        {"id": "op_bake", "kind": "operation", "label": "bake", "canonical_id": "OP_BAKE", "source": "instruction_step", "metadata": {}},
+        {"id": "result_banana_bread", "kind": "result", "label": "banana bread", "canonical_id": "RESULT_BANANA_BREAD", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_banana", "target": "op_mash", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "op_mash", "target": "state_mashed_banana", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e3", "source": "state_mashed_banana", "target": "op_mix", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e4", "source": "ing_flour", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e5", "source": "ing_egg", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e6", "source": "ing_sugar", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e7", "source": "op_mix", "target": "state_batter", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e8", "source": "state_batter", "target": "op_bake", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e9", "source": "op_bake", "target": "result_banana_bread", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Mash banana.", "operation_nodes": ["op_mash"]},
+        {"id": "step_2", "raw_text": "Mix with flour, egg and sugar.", "operation_nodes": ["op_mix"]},
+        {"id": "step_3", "raw_text": "Bake batter.", "operation_nodes": ["op_bake"]}
+      ]
+    }
+  },
+  "expected": {
+    "must_match_units": ["ING_BANANA", "ING_FLOUR", "ING_EGG", "ING_SUGAR", "OP_MASH", "OP_MIX", "OP_BAKE", "STATE_BATTER", "RESULT_BANANA_BREAD"],
+    "must_not_match_units": [],
+    "expected_difference_type": "identity",
+    "expected_future_score_behavior": "future T_raw should be maximal; future PZT_score should be low or zero due to non-identity correction",
+    "notes": "This case locks the distinction between mechanical transferability and useful PZT novelty."
+  }
+}

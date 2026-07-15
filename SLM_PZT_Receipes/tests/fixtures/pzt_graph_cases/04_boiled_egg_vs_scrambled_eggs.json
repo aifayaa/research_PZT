@@ -1,0 +1,58 @@
+{
+  "case_id": "04_boiled_egg_vs_scrambled_eggs",
+  "description": "Same ingredient with different operations.",
+  "source_recipe": {
+    "recipe_id": "fixture_04_source",
+    "title": "Boiled Egg",
+    "raw_ingredients": ["egg"],
+    "raw_instructions": ["Boil egg."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_egg", "kind": "ingredient", "label": "egg", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_boil", "kind": "operation", "label": "boil", "canonical_id": "OP_BOIL", "source": "instruction_step", "metadata": {}},
+        {"id": "state_boiled_egg", "kind": "state", "label": "boiled egg", "canonical_id": "STATE_BOILED_EGG", "source": "instruction_step", "metadata": {}},
+        {"id": "result_boiled_egg", "kind": "result", "label": "boiled egg", "canonical_id": "RESULT_BOILED_EGG", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_egg", "target": "op_boil", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "op_boil", "target": "state_boiled_egg", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e3", "source": "state_boiled_egg", "target": "result_boiled_egg", "relation": "state_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Boil egg.", "operation_nodes": ["op_boil"]}
+      ]
+    }
+  },
+  "target_recipe": {
+    "recipe_id": "fixture_04_target",
+    "title": "Scrambled Eggs",
+    "raw_ingredients": ["eggs"],
+    "raw_instructions": ["Beat egg.", "Cook in pan."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_egg", "kind": "ingredient", "label": "eggs", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_beat", "kind": "operation", "label": "beat", "canonical_id": "OP_BEAT", "source": "instruction_step", "metadata": {}},
+        {"id": "state_beaten_egg", "kind": "state", "label": "beaten egg", "canonical_id": "STATE_BEATEN_EGG", "source": "instruction_step", "metadata": {}},
+        {"id": "op_cook_pan", "kind": "operation", "label": "cook in pan", "canonical_id": "OP_COOK_IN_PAN", "source": "instruction_step", "metadata": {}},
+        {"id": "result_scrambled_egg", "kind": "result", "label": "scrambled eggs", "canonical_id": "RESULT_SCRAMBLED_EGG", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_egg", "target": "op_beat", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "op_beat", "target": "state_beaten_egg", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e3", "source": "state_beaten_egg", "target": "op_cook_pan", "relation": "state_to_operation", "metadata": {}},
+        {"id": "e4", "source": "op_cook_pan", "target": "result_scrambled_egg", "relation": "operation_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Beat egg.", "operation_nodes": ["op_beat"]},
+        {"id": "step_2", "raw_text": "Cook in pan.", "operation_nodes": ["op_cook_pan"]}
+      ]
+    }
+  },
+  "expected": {
+    "must_match_units": ["ING_EGG"],
+    "must_not_match_units": [["OP_BOIL", "OP_BEAT"], ["OP_BOIL", "OP_COOK_IN_PAN"]],
+    "expected_difference_type": "same_ingredient_different_operations",
+    "expected_future_score_behavior": "future PZT score should be lower than chicken stir-fry to tofu stir-fry",
+    "notes": "Shared ingredient alone is insufficient for a strong transfer claim."
+  }
+}

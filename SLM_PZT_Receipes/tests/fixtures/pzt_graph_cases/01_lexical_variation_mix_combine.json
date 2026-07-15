@@ -1,0 +1,59 @@
+{
+  "case_id": "01_lexical_variation_mix_combine",
+  "description": "Lexical variation without cognitive difference: stir and combine canonicalize to OP_MIX.",
+  "source_recipe": {
+    "recipe_id": "fixture_01_source",
+    "title": "Stirred Flour And Eggs",
+    "raw_ingredients": ["flour", "eggs"],
+    "raw_instructions": ["Stir flour and eggs together."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_flour", "kind": "ingredient", "label": "flour", "canonical_id": "ING_FLOUR", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_egg", "kind": "ingredient", "label": "eggs", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_mix", "kind": "operation", "label": "stir together", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {"surface_form": "stir"}},
+        {"id": "state_mixture", "kind": "state", "label": "flour egg mixture", "canonical_id": "STATE_FLOUR_EGG_MIXTURE", "source": "instruction_step", "metadata": {"produced_by": "OP_MIX"}},
+        {"id": "result_mixture", "kind": "result", "label": "mixed flour and eggs", "canonical_id": "RESULT_FLOUR_EGG_MIXTURE", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_flour", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "ing_egg", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e3", "source": "op_mix", "target": "state_mixture", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e4", "source": "state_mixture", "target": "result_mixture", "relation": "state_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Stir flour and eggs together.", "operation_nodes": ["op_mix"]}
+      ]
+    }
+  },
+  "target_recipe": {
+    "recipe_id": "fixture_01_target",
+    "title": "Combined Flour And Eggs",
+    "raw_ingredients": ["flour", "eggs"],
+    "raw_instructions": ["Combine flour and eggs."],
+    "graph": {
+      "nodes": [
+        {"id": "ing_flour", "kind": "ingredient", "label": "flour", "canonical_id": "ING_FLOUR", "source": "ingredient_line", "metadata": {}},
+        {"id": "ing_egg", "kind": "ingredient", "label": "eggs", "canonical_id": "ING_EGG", "source": "ingredient_line", "metadata": {}},
+        {"id": "op_mix", "kind": "operation", "label": "combine", "canonical_id": "OP_MIX", "source": "instruction_step", "metadata": {"surface_form": "combine"}},
+        {"id": "state_mixture", "kind": "state", "label": "flour egg mixture", "canonical_id": "STATE_FLOUR_EGG_MIXTURE", "source": "instruction_step", "metadata": {"produced_by": "OP_MIX"}},
+        {"id": "result_mixture", "kind": "result", "label": "mixed flour and eggs", "canonical_id": "RESULT_FLOUR_EGG_MIXTURE", "source": "manual_fixture", "metadata": {}}
+      ],
+      "edges": [
+        {"id": "e1", "source": "ing_flour", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e2", "source": "ing_egg", "target": "op_mix", "relation": "ingredient_to_operation", "metadata": {}},
+        {"id": "e3", "source": "op_mix", "target": "state_mixture", "relation": "operation_to_state", "metadata": {}},
+        {"id": "e4", "source": "state_mixture", "target": "result_mixture", "relation": "state_to_result", "metadata": {}}
+      ],
+      "steps": [
+        {"id": "step_1", "raw_text": "Combine flour and eggs.", "operation_nodes": ["op_mix"]}
+      ]
+    }
+  },
+  "expected": {
+    "must_match_units": ["ING_FLOUR", "ING_EGG", "OP_MIX", "STATE_FLOUR_EGG_MIXTURE"],
+    "must_not_match_units": [],
+    "expected_difference_type": "lexical_variation_no_cognitive_difference",
+    "expected_future_score_behavior": "future distance should be zero or near zero; no operation switch should be counted",
+    "notes": "Surface verbs differ, but both operation nodes intentionally canonicalize to OP_MIX."
+  }
+}
