@@ -126,6 +126,7 @@ def create_manifest(
 ) -> EvidenceManifest:
     root = (root or Path.cwd()).resolve()
     failures = list(failure_reasons)
+    commit, dirty = git_state(root)
     for upstream_path in upstream_manifests:
         upstream = load_manifest(upstream_path)
         if upstream.verdict != "PASS":
@@ -134,7 +135,12 @@ def create_manifest(
             verify_manifest(upstream_path, root=root, require_pass=True)
         except EvidenceValidationError as exc:
             failures.append(f"invalid_upstream:{upstream.stage}:{exc}")
-    commit, dirty = git_state(root)
+        if upstream.code_commit != commit:
+            failures.append(
+                f"upstream_commit_mismatch:{upstream.stage}:{upstream.code_commit}:{commit}"
+            )
+        if upstream.code_dirty:
+            failures.append(f"upstream_code_dirty:{upstream.stage}")
     config = dict(configuration)
     return EvidenceManifest(
         schema_version=MANIFEST_SCHEMA_VERSION,

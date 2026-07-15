@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from .extraction_schema import OperationCandidate
 from .semantic_memory import DEFAULT_SEMANTIC_MEMORY, SemanticMemory
 from .semantic_schema import CanonicalOperation
@@ -34,7 +36,7 @@ def canonicalize_operation_candidate(
 
 def _operation_lookup_key(candidate: OperationCandidate) -> str:
     raw = candidate.raw_span.lower()
-    if candidate.operation_lemma_candidate == "cook" and "pan" in raw:
+    if candidate.operation_lemma_candidate == "cook" and re.search(r"\bpan\b", raw):
         return "cook in pan"
     if candidate.operation_lemma_candidate == "mix" and "stir" in raw and "together" in raw:
         return "stir together"

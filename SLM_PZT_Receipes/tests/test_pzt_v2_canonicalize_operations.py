@@ -39,6 +39,10 @@ class PZTV2CanonicalizeOperationsTests(unittest.TestCase):
         self.assertEqual(canonical_ops[0].canonical_operation_id, "OP_BEAT")
         self.assertEqual(canonical_ops[1].canonical_operation_id, "OP_COOK_IN_PAN")
 
+    def test_saucepan_does_not_trigger_cook_in_pan_context(self):
+        canonical = canonicalize_operation_candidate(self._first_op("Cook sugar in a saucepan."))
+        self.assertEqual(canonical.canonical_operation_id, "OP_COOK")
+
     def test_unknown_operation_is_explicit_warning(self):
         from pzt_v2.extraction_schema import OperationCandidate
 
