@@ -135,6 +135,28 @@ class PZTV2VocabularyMiningTests(unittest.TestCase):
         self.assertNotIn("canonical_conflict", by_surface["cook"].metadata)
         self.assertNotIn("canonical_conflict", by_surface["pour"].metadata)
 
+    def test_contextual_cook_in_pan_does_not_conflict_with_generic_cook(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "cook.ndjson"
+            path.write_text(
+                json.dumps(
+                    {
+                        "input": (
+                            "Cook contexts\n\nIngredients:\negg\n\nInstructions:\n"
+                            "Cook egg. Cook egg in a pan. Crush cookies into a pan."
+                        )
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            result = mine_vocabulary(path)
+        by_surface = {row.surface: row for row in result.operation_vocab}
+        self.assertEqual(by_surface["cook"].canonical_id, "OP_COOK")
+        self.assertEqual(by_surface["cook in pan"].canonical_id, "OP_COOK_IN_PAN")
+        self.assertNotIn("canonical_conflict", by_surface["cook"].metadata)
+        self.assertNotIn("canonical_conflict", by_surface["cook in pan"].metadata)
+
 
 if __name__ == "__main__":
     unittest.main()

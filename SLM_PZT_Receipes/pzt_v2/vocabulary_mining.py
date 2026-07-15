@@ -12,6 +12,7 @@ from .extraction_pipeline import extract_recipe_candidates
 from .extraction_schema import OperationCandidate
 from .parsing import RecipeParseError, parse_recipe_object
 from .semantic_schema import CanonicalizedRecipe
+from .semantic_memory import DEFAULT_SEMANTIC_MEMORY
 from .vocabulary_schema import VocabularyMiningReport, VocabularySurface
 
 
@@ -298,15 +299,20 @@ def _collect_recipe(collector: _VocabularyCollector, recipe: CanonicalizedRecipe
     for step in recipe.canonical_instruction_steps:
         for operation in step.canonical_operations:
             raw_surface = _operation_surface(operation.raw_span, operation.operation_lemma_candidate)
-            for surface, source_field in [
-                (operation.operation_lemma_candidate, "operation_lemma_candidate"),
-                (raw_surface, "raw_span_operation_surface"),
+            lemma_concept = DEFAULT_SEMANTIC_MEMORY.lookup_operation(operation.operation_lemma_candidate)
+            for surface, source_field, canonical_id in [
+                (
+                    operation.operation_lemma_candidate,
+                    "operation_lemma_candidate",
+                    lemma_concept.canonical_id if lemma_concept else operation.canonical_operation_id,
+                ),
+                (raw_surface, "raw_span_operation_surface", operation.canonical_operation_id),
             ]:
                 collector.add(
                     kind="operation",
                     surface=surface,
-                    canonical_id=operation.canonical_operation_id,
-                    known=operation.canonical_operation_id is not None,
+                    canonical_id=canonical_id,
+                    known=canonical_id is not None,
                     example=operation.raw_span,
                     source_field=source_field,
                     metadata={"output_state_candidate": operation.output_state_candidate},
@@ -325,13 +331,13 @@ def _collect_recipe(collector: _VocabularyCollector, recipe: CanonicalizedRecipe
 
 def _operation_surface(raw_span: str, lemma: str) -> str:
     raw = raw_span.lower()
-    if "stir" in raw and "together" in raw:
+    if lemma == "mix" and re.search(r"\bstir\b", raw) and re.search(r"\btogether\b", raw):
         return "stir together"
-    if "cook" in raw and "pan" in raw:
+    if lemma == "cook" and re.search(r"\bpan\b", raw):
         return "cook in pan"
-    if "stir-fry" in raw or "stir fry" in raw:
+    if lemma == "stir_fry":
         return "stir-fry"
-    if "sauté" in raw:
+    if lemma == "saute" and "sauté" in raw:
         return "sauté"
     match = re.match(r"\s*([a-zA-Z-]+)", raw_span)
     return match.group(1).lower() if match else lemma
