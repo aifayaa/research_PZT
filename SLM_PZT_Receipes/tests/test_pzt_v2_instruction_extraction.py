@@ -50,6 +50,32 @@ class PZTV2InstructionExtractionTests(unittest.TestCase):
         self.assertTrue(step.warnings)
         self.assertIn("unrecognized_instruction_clause:Let happiness happen", step.warnings)
 
+    def test_operations_follow_textual_order_not_lexicon_order(self):
+        step = extract_instruction_step(
+            "Cook over medium heat, stirring constantly.",
+            step_index=0,
+        )
+        self.assertEqual(
+            [operation.operation_lemma_candidate for operation in step.operation_candidates],
+            ["cook", "mix"],
+        )
+        self.assertTrue(step.operation_candidates[0].raw_span.lower().startswith("cook"))
+
+    def test_multiple_operations_in_one_sentence_are_preserved(self):
+        step = extract_instruction_step(
+            "Pour the batter into the pan. Bake until golden.",
+            step_index=0,
+        )
+        self.assertEqual(
+            [operation.operation_lemma_candidate for operation in step.operation_candidates],
+            ["pour", "bake"],
+        )
+
+    def test_stir_fry_is_not_collapsed_to_mix(self):
+        step = extract_instruction_step("Stir-fry tofu and vegetables.", step_index=0)
+        self.assertEqual(len(step.operation_candidates), 1)
+        self.assertEqual(step.operation_candidates[0].operation_lemma_candidate, "stir_fry")
+
 
 if __name__ == "__main__":
     unittest.main()

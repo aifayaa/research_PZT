@@ -28,6 +28,7 @@ class _SurfaceBucket:
     examples: List[str] = field(default_factory=list)
     source_fields: set[str] = field(default_factory=set)
     metadata: Dict[str, object] = field(default_factory=dict)
+    canonical_ids_seen: set[str] = field(default_factory=set)
 
     def add(
         self,
@@ -40,6 +41,8 @@ class _SurfaceBucket:
     ) -> None:
         self.count += 1
         self.known = self.known or known
+        if canonical_id is not None:
+            self.canonical_ids_seen.add(canonical_id)
         if self.canonical_id is None and canonical_id is not None:
             self.canonical_id = canonical_id
         if example and len(self.examples) < MAX_EXAMPLES_PER_SURFACE and example not in self.examples:
@@ -47,6 +50,10 @@ class _SurfaceBucket:
         self.source_fields.add(source_field)
         if metadata:
             self.metadata.update(metadata)
+        if self.canonical_ids_seen:
+            self.metadata["canonical_ids_seen"] = sorted(self.canonical_ids_seen)
+        if len(self.canonical_ids_seen) > 1:
+            self.metadata["canonical_conflict"] = True
 
     def to_surface(self) -> VocabularySurface:
         return VocabularySurface(

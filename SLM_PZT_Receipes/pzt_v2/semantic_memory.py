@@ -91,6 +91,7 @@ class SemanticMemory:
         self._register(kind="state", canonical_id="STATE_BATTER", label="batter", aliases=["batter"])
 
         self._register(kind="operation", canonical_id="OP_MIX", label="mix", aliases=["mix", "combine", "stir", "stir together", "incorporate"])
+        self._register(kind="operation", canonical_id="OP_CUT", label="cut", aliases=["cut", "cutting"])
         self._register(kind="operation", canonical_id="OP_CHOP", label="chop", aliases=["chop", "chopped", "chopping"])
         self._register(kind="operation", canonical_id="OP_DICE", label="dice", aliases=["dice", "diced", "dicing"])
         self._register(kind="operation", canonical_id="OP_MASH", label="mash", aliases=["mash", "mashed"])

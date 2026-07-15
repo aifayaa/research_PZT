@@ -113,6 +113,28 @@ class PZTV2VocabularyMiningTests(unittest.TestCase):
         self.assertFalse({"tsp salt", "c sugar", "c flour", "cup milk"} & ingredient_surfaces)
         self.assertTrue({"tsp", "c", "cup"}.issubset(unit_surfaces))
 
+    def test_operation_surface_never_inherits_another_verbs_canonical_id(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "operations.ndjson"
+            path.write_text(
+                json.dumps(
+                    {
+                        "input": (
+                            "Ordered operations\n\nIngredients:\nwater\n\nInstructions:\n"
+                            "Cook over medium heat, stirring constantly. Pour into a pan. Bake until firm."
+                        )
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            result = mine_vocabulary(path)
+        by_surface = {row.surface: row for row in result.operation_vocab}
+        self.assertEqual(by_surface["cook"].canonical_id, "OP_COOK")
+        self.assertEqual(by_surface["pour"].canonical_id, "OP_POUR")
+        self.assertNotIn("canonical_conflict", by_surface["cook"].metadata)
+        self.assertNotIn("canonical_conflict", by_surface["pour"].metadata)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import re
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from .extraction_schema import InstructionStepCandidate, OperationCandidate
 
 
 _VERB_PATTERNS = [
+    ("cut", re.compile(r"\b(cut|cuts|cutting)\b", re.IGNORECASE)),
     ("chop", re.compile(r"\b(chop|chops|chopped|chopping)\b", re.IGNORECASE)),
     ("dice", re.compile(r"\b(dice|dices|diced|dicing)\b", re.IGNORECASE)),
     ("slice", re.compile(r"\b(slice|slices|sliced|slicing)\b", re.IGNORECASE)),
@@ -52,13 +53,14 @@ def extract_instruction_step(raw: str, *, step_index: int) -> InstructionStepCan
     operations: List[OperationCandidate] = []
     last_inputs: List[str] = []
     for clause in clauses:
-        op = _extract_operation_from_clause(clause, last_inputs=last_inputs)
-        if op is None:
+        clause_operations = _extract_operations_from_clause(clause, last_inputs=last_inputs)
+        if not clause_operations:
             warnings.append(f"unrecognized_instruction_clause:{clause}")
             continue
-        operations.append(op)
-        if op.input_candidates:
-            last_inputs = op.input_candidates
+        operations.extend(clause_operations)
+        for op in clause_operations:
+            if op.input_candidates:
+                last_inputs = op.input_candidates
 
     if not operations and not warnings:
         warnings.append("unrecognized_instruction")
@@ -76,28 +78,60 @@ def extract_instruction_steps(raw_lines: List[str]) -> List[InstructionStepCandi
 
 def _split_clauses(text: str) -> List[str]:
     normalized = text.strip().rstrip(".")
-    parts = re.split(r"\bthen\b|;", normalized, flags=re.IGNORECASE)
+    parts = re.split(r"\bthen\b|;|(?<=[.!?])\s+", normalized, flags=re.IGNORECASE)
     return [part.strip(" .") for part in parts if part.strip(" .")]
 
 
-def _extract_operation_from_clause(clause: str, *, last_inputs: List[str]) -> Optional[OperationCandidate]:
+def _operation_matches(clause: str) -> List[Tuple[int, int, str, re.Match[str]]]:
+    """Return non-overlapping verb matches in textual order.
+
+    Pattern declaration order must never decide which operation a sentence
+    contains.  At the same offset the longest surface wins, which keeps
+    ``stir-fry`` from being reduced to ``stir``.
+    """
+    matches: List[Tuple[int, int, str, re.Match[str]]] = []
     for lemma, pattern in _VERB_PATTERNS:
-        match = pattern.search(clause)
-        if not match:
+        for match in pattern.finditer(clause):
+            matches.append((match.start(), match.end(), lemma, match))
+    matches.sort(key=lambda item: (item[0], -(item[1] - item[0]), item[2]))
+
+    selected: List[Tuple[int, int, str, re.Match[str]]] = []
+    for candidate in matches:
+        start, end, _, _ = candidate
+        if selected and start < selected[-1][1]:
             continue
-        raw_span = clause.strip()
-        tail = clause[match.end():].strip()
-        inputs = _extract_inputs(tail, fallback=last_inputs)
+        selected.append(candidate)
+    return selected
+
+
+def _extract_operations_from_clause(clause: str, *, last_inputs: List[str]) -> List[OperationCandidate]:
+    matches = _operation_matches(clause)
+    operations: List[OperationCandidate] = []
+    current_inputs = list(last_inputs)
+    for index, (start, end, lemma, _match) in enumerate(matches):
+        next_start = matches[index + 1][0] if index + 1 < len(matches) else len(clause)
+        raw_span = clause[start:next_start].strip(" ,-.")
+        tail = clause[end:next_start].strip(" ,-.\t")
+        inputs = _extract_inputs(tail, fallback=current_inputs)
         output = _output_state(lemma, inputs)
-        return OperationCandidate(
-            raw_span=raw_span,
+        operation = OperationCandidate(
+            raw_span=raw_span or clause[start:end],
             operation_lemma_candidate=lemma,
             input_candidates=inputs,
             output_state_candidate=output,
             confidence=0.85 if inputs else 0.60,
             warnings=[] if inputs else ["missing_input_candidates"],
         )
-    return None
+        operations.append(operation)
+        if inputs:
+            current_inputs = inputs
+    return operations
+
+
+def _extract_operation_from_clause(clause: str, *, last_inputs: List[str]) -> Optional[OperationCandidate]:
+    """Compatibility wrapper for callers that expect one operation."""
+    operations = _extract_operations_from_clause(clause, last_inputs=last_inputs)
+    return operations[0] if operations else None
 
 
 def _extract_inputs(text: str, *, fallback: List[str]) -> List[str]:
@@ -137,6 +171,8 @@ def _output_state(lemma: str, inputs: List[str]) -> Optional[str]:
     primary = inputs[0] if inputs else None
     if lemma == "chop" and primary:
         return f"chopped {primary}"
+    if lemma == "cut" and primary:
+        return f"cut {primary}"
     if lemma == "dice" and primary:
         return f"diced {primary}"
     if lemma == "slice" and primary:
