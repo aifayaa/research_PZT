@@ -1,0 +1,47 @@
+{
+  "score_contract_version": "pzt-v2-equal-unit-edits/v0.2",
+  "recipe_limit": 200,
+  "recipes_parsed": 200,
+  "graphs_built": 200,
+  "available_directional_pairs": 39800,
+  "pairs_requested": 10000,
+  "pairs_selected": 10000,
+  "pairs_written": 10000,
+  "graph_errors": [],
+  "pair_errors": [],
+  "raw_transferability": {
+    "count": 10000,
+    "min": 0.0,
+    "p10": 0.0,
+    "p25": 0.01654073922809884,
+    "median": 0.04044684129429892,
+    "p75": 0.07231638418079096,
+    "p90": 0.1064887493458922,
+    "max": 0.3418803418803419,
+    "mean": 0.04961944434778661
+  },
+  "pzt_score": {
+    "count": 10000,
+    "min": 0.0,
+    "p10": 0.0,
+    "p25": 0.010396975425330812,
+    "median": 0.023243801652892564,
+    "p75": 0.03844970049956199,
+    "p90": 0.05433109853198977,
+    "max": 0.13947590870667795,
+    "mean": 0.026521487771048315
+  },
+  "edit_cost": {
+    "count": 10000,
+    "min": 8.0,
+    "p10": 26.0,
+    "p25": 33.0,
+    "median": 41.0,
+    "p75": 49.0,
+    "p90": 56.0,
+    "max": 93.0,
+    "mean": 41.3244
+  },
+  "raw_zero_fraction": 0.1128,
+  "raw_unique_value_count_8dp": 6262
+}

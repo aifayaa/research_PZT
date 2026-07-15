@@ -1,0 +1,17 @@
+{
+  "question": "En connaissant la recette source, à quel point est-elle transférable vers la recette cible ?",
+  "directional": true,
+  "scale": {
+    "1": "Pas transférable : une nouvelle procédure est nécessaire.",
+    "2": "Très peu d'éléments de la source sont réutilisables.",
+    "3": "Transfert partiel avec plusieurs changements majeurs.",
+    "4": "Transfert raisonnable avec plusieurs adaptations explicites.",
+    "5": "Très transférable avec quelques changements localisés.",
+    "6": "Transformation presque directe avec un effort cognitif minimal."
+  },
+  "instructions": [
+    "Ne pas consulter les scores du modèle.",
+    "Mettre source_known=no si la recette source n'est pas suffisamment connue.",
+    "Donner une note entière de 1 à 6 uniquement si source_known=yes."
+  ]
+}

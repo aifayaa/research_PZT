@@ -1,0 +1,18 @@
+{
+  "recipes_extracted": 20000,
+  "ingredient_lines": 150018,
+  "ingredient_candidates": 150018,
+  "instruction_steps": 101675,
+  "operation_candidates": 105520,
+  "unrecognized_clauses": 45794,
+  "operation_order_violations": 0,
+  "canonicalization_failures": 0,
+  "warning_counts": {
+    "missing_base_object_candidate": 728,
+    "missing_input_candidates": 26711,
+    "unknown_ingredient": 99526,
+    "unknown_state": 4695,
+    "unrecognized_instruction_clause": 45794
+  },
+  "errors": []
+}

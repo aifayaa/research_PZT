@@ -1,0 +1,67 @@
+{
+  "schema_version": "pzt-evidence/v1",
+  "run_id": "pzt-v2-human-50-20260715",
+  "stage": "human_validation_package_attestation",
+  "verdict": "PASS",
+  "code_commit": "ea801a88edc16fe8877240ab46f10dbe36dcc38f",
+  "code_dirty": false,
+  "python_version": "3.14.2",
+  "platform": "macOS-26.1-arm64-arm-64bit-Mach-O",
+  "command": [
+    "attest",
+    "human_validation_package",
+    "pzt-v2-model-v0.2.0"
+  ],
+  "configuration": {
+    "distinct_count": 50,
+    "repeats": 5,
+    "deciles": 10,
+    "seed": "pzt-human-v1",
+    "score_hidden": true,
+    "attests_verified_pair_manifest": true
+  },
+  "configuration_sha256": "56554fec3017b911f54a1e159ad78d403a78814a16dcd28ce5c583ec15304a86",
+  "inputs": [
+    {
+      "path": "evidence/runs/pzt-v2-20260715/pair_scoring_manifest_10k.json",
+      "sha256": "ea7ee0f46b7ad95e29936f47225b86e571e2e6c471c37a96d9eeaffba7a48f12",
+      "size_bytes": 3775,
+      "kind": "file"
+    }
+  ],
+  "upstream_manifests": [],
+  "outputs": [
+    {
+      "path": "human_validation/pzt-v2-model-v0.2.0/blind/human_scores_blind.csv",
+      "sha256": "8828401b452a9e9647eb68e50cc8b4e13a5a4e81e95d9d5061e6ebab7fae043b",
+      "size_bytes": 50882,
+      "kind": "file"
+    },
+    {
+      "path": "human_validation/pzt-v2-model-v0.2.0/blind/human_scoring_rubric.json",
+      "sha256": "b25d11205789cc99ca875ceba503bf7619dc33a01dad481d051d62e672e3c24e",
+      "size_bytes": 809,
+      "kind": "file"
+    },
+    {
+      "path": "human_validation/pzt-v2-model-v0.2.0/model_key/human_scores_key.csv",
+      "sha256": "91edb3d81d345b747ed83d48a32d18c7aeffb35b457ccd4eeb9b12f2f450cf02",
+      "size_bytes": 8312,
+      "kind": "file"
+    }
+  ],
+  "metrics": {
+    "distinct_pairs": 50,
+    "blind_repeats": 5,
+    "presentations": 55,
+    "deciles": 10,
+    "human_scale_min": 1,
+    "human_scale_max": 6
+  },
+  "thresholds": {
+    "distinct_pairs": 50,
+    "blind_repeats": 5
+  },
+  "failure_reasons": [],
+  "created_at": "2026-07-15T14:25:21.076730+00:00"
+}

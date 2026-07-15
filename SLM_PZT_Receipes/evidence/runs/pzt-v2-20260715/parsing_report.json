@@ -1,0 +1,7 @@
+{
+  "records_seen": 20000,
+  "parsed_valid": 20000,
+  "parsed_invalid": 0,
+  "raw_preservation_failures": 0,
+  "parse_errors": []
+}

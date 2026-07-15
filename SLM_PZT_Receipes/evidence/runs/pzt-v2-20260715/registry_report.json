@@ -1,0 +1,41 @@
+{
+  "schema_version": "pzt-vocabulary/v1",
+  "concept_count": 46475,
+  "alias_count": 46587,
+  "token_total": 436929,
+  "represented_token_total": 436929,
+  "represented_token_coverage": 1.0,
+  "validated_alias_token_total": 287334,
+  "validated_alias_token_coverage": 0.6576217188605014,
+  "provisional_singleton_token_total": 149595,
+  "by_kind": {
+    "ingredient": {
+      "surface_count": 16250,
+      "token_total": 149654,
+      "represented_token_total": 149654,
+      "represented_token_coverage": 1.0,
+      "validated_alias_token_total": 50128,
+      "validated_alias_token_coverage": 0.334959306132813,
+      "provisional_singleton_token_total": 99526
+    },
+    "operation": {
+      "surface_count": 30314,
+      "token_total": 256414,
+      "represented_token_total": 256414,
+      "represented_token_coverage": 1.0,
+      "validated_alias_token_total": 211040,
+      "validated_alias_token_coverage": 0.82304398355784,
+      "provisional_singleton_token_total": 45374
+    },
+    "state": {
+      "surface_count": 23,
+      "token_total": 30861,
+      "represented_token_total": 30861,
+      "represented_token_coverage": 1.0,
+      "validated_alias_token_total": 26166,
+      "validated_alias_token_coverage": 0.8478662389423545,
+      "provisional_singleton_token_total": 4695
+    }
+  },
+  "conflicts": []
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": "pzt-evidence/v1",
+  "run_id": "pzt-v2-20k-20260715",
+  "stage": "parsing",
+  "verdict": "PASS",
+  "code_commit": "ea801a88edc16fe8877240ab46f10dbe36dcc38f",
+  "code_dirty": false,
+  "python_version": "3.14.2",
+  "platform": "macOS-26.1-arm64-arm-64bit-Mach-O",
+  "command": [
+    "/Users/vh/dev/research_PZT/SLM_PZT_Receipes/pzt_v2/run_corpus_gates.py",
+    "--input",
+    "all_recipes.ndjson",
+    "--limit",
+    "20000",
+    "--output-dir",
+    "/tmp/pzt_v2_refutation_20k",
+    "--run-id",
+    "pzt-v2-20k-20260715"
+  ],
+  "configuration": {
+    "limit": 20000,
+    "strict": true
+  },
+  "configuration_sha256": "122099a01ac163a2b41e4fa0b76c69a224264029c4bde48de2ad4f984044fcc3",
+  "inputs": [
+    {
+      "path": "all_recipes.ndjson",
+      "sha256": "4e05aff5c0b19f63dc213ca0e49c9d7a8787da85b5c17ce9938ebe8fa928c841",
+      "size_bytes": 1636934097,
+      "kind": "file"
+    }
+  ],
+  "upstream_manifests": [],
+  "outputs": [
+    {
+      "path": "/private/tmp/pzt_v2_refutation_20k/parsing_report.json",
+      "sha256": "fd9d77391f69fc834dc5715e5331403fb4a1a7274995b261ba0f7ac19f94abda",
+      "size_bytes": 132,
+      "kind": "file"
+    }
+  ],
+  "metrics": {
+    "records_seen": 20000,
+    "parsed_valid": 20000,
+    "parsed_invalid": 0,
+    "raw_preservation_failures": 0,
+    "parse_errors": []
+  },
+  "thresholds": {
+    "parsed_invalid": 0,
+    "raw_preservation_failures": 0
+  },
+  "failure_reasons": [],
+  "created_at": "2026-07-15T14:22:09.542306+00:00"
+}

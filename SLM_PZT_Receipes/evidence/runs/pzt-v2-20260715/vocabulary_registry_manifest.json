@@ -1,0 +1,136 @@
+{
+  "schema_version": "pzt-evidence/v1",
+  "run_id": "pzt-v2-20k-20260715",
+  "stage": "vocabulary_registry",
+  "verdict": "PASS",
+  "code_commit": "ea801a88edc16fe8877240ab46f10dbe36dcc38f",
+  "code_dirty": false,
+  "python_version": "3.14.2",
+  "platform": "macOS-26.1-arm64-arm-64bit-Mach-O",
+  "command": [
+    "/Users/vh/dev/research_PZT/SLM_PZT_Receipes/pzt_v2/run_vocabulary_gate.py",
+    "--input",
+    "all_recipes.ndjson",
+    "--vocabulary-dir",
+    "/tmp/pzt_v2_refutation_vocab",
+    "--output-dir",
+    "/tmp/pzt_v2_refutation_registry",
+    "--manifest",
+    "/tmp/pzt_v2_refutation_registry/manifest.json",
+    "--run-id",
+    "pzt-v2-20k-20260715",
+    "--upstream-manifest",
+    "/tmp/pzt_v2_refutation_20k/extraction_manifest.json"
+  ],
+  "configuration": {
+    "singleton_policy": "conservative_no_merge",
+    "top_pollution_check": 100
+  },
+  "configuration_sha256": "29ac97e8970bfac3cd8ef934162cb963478781b700417a69ab5c377ab290975f",
+  "inputs": [
+    {
+      "path": "all_recipes.ndjson",
+      "sha256": "4e05aff5c0b19f63dc213ca0e49c9d7a8787da85b5c17ce9938ebe8fa928c841",
+      "size_bytes": 1636934097,
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/pzt_v2_refutation_vocab/vocab_report.json",
+      "sha256": "7da8bcb72e7f7f03f643a9f3be575018a31ad4d0c69f701bed18edffebc24067",
+      "size_bytes": 244158,
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/pzt_v2_refutation_vocab/ingredient_vocab.jsonl",
+      "sha256": "4d7feae5854d87c3a54a057992992ff43a0d4dfdc4fbdcc7230b3518a23fea56",
+      "size_bytes": 3935050,
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/pzt_v2_refutation_vocab/operation_vocab.jsonl",
+      "sha256": "c27078c968ee4b29df4d223415d1cfcbf3e3bed4e8251cf0e94590f0b77690ce",
+      "size_bytes": 8861995,
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/pzt_v2_refutation_vocab/state_vocab.jsonl",
+      "sha256": "a1137fd93b368da8d858080e8d914b6a9617908ee7cc544a782cfaccf668b931",
+      "size_bytes": 9883,
+      "kind": "file"
+    }
+  ],
+  "upstream_manifests": [
+    {
+      "path": "/private/tmp/pzt_v2_refutation_20k/extraction_manifest.json",
+      "sha256": "9cca5f50ce174f625bde7f9a04cefb66ed783d360abe929a14dfc7c5c9412c89",
+      "size_bytes": 2210,
+      "kind": "file"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/private/tmp/pzt_v2_refutation_registry/concept_registry.jsonl",
+      "sha256": "c0d4f4848e5fb8135642c2df7005477010bcbba1717343242a021bfccd5caeea",
+      "size_bytes": 19662896,
+      "kind": "file"
+    },
+    {
+      "path": "/private/tmp/pzt_v2_refutation_registry/registry_report.json",
+      "sha256": "2a1bc59750bad0dec041e6327cfa654736b9ff1f6679c31a0e592aa3b6f6d854",
+      "size_bytes": 1324,
+      "kind": "file"
+    }
+  ],
+  "metrics": {
+    "schema_version": "pzt-vocabulary/v1",
+    "concept_count": 46475,
+    "alias_count": 46587,
+    "token_total": 436929,
+    "represented_token_total": 436929,
+    "represented_token_coverage": 1.0,
+    "validated_alias_token_total": 287334,
+    "validated_alias_token_coverage": 0.6576217188605014,
+    "provisional_singleton_token_total": 149595,
+    "by_kind": {
+      "ingredient": {
+        "surface_count": 16250,
+        "token_total": 149654,
+        "represented_token_total": 149654,
+        "represented_token_coverage": 1.0,
+        "validated_alias_token_total": 50128,
+        "validated_alias_token_coverage": 0.334959306132813,
+        "provisional_singleton_token_total": 99526
+      },
+      "operation": {
+        "surface_count": 30314,
+        "token_total": 256414,
+        "represented_token_total": 256414,
+        "represented_token_coverage": 1.0,
+        "validated_alias_token_total": 211040,
+        "validated_alias_token_coverage": 0.82304398355784,
+        "provisional_singleton_token_total": 45374
+      },
+      "state": {
+        "surface_count": 23,
+        "token_total": 30861,
+        "represented_token_total": 30861,
+        "represented_token_coverage": 1.0,
+        "validated_alias_token_total": 26166,
+        "validated_alias_token_coverage": 0.8478662389423545,
+        "provisional_singleton_token_total": 4695
+      }
+    },
+    "conflicts": [],
+    "parsed_valid": 20000,
+    "parsed_invalid": 0,
+    "measurement_pollution": []
+  },
+  "thresholds": {
+    "represented_token_coverage": 1.0,
+    "parsed_invalid": 0,
+    "canonical_conflicts": 0,
+    "measurement_pollution_top_100": 0
+  },
+  "failure_reasons": [],
+  "created_at": "2026-07-15T14:22:30.489982+00:00"
+}
