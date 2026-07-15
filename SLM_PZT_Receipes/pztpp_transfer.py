@@ -38,11 +38,15 @@ def apply_preset(p: argparse.ArgumentParser, preset: str, args: argparse.Namespa
         if hasattr(args, 'rerank_by_sim_full'):
             setattr(args, 'rerank_by_sim_full', True)
     elif preset == 'fast':
-        setattr(args, 'cand_k', args.cand_k if args.cand_k is not None else 200)
-        setattr(args, 'explain_top_n', args.explain_top_n if args.explain_top_n is not None else 10)
+        if hasattr(args, 'cand_k'):
+            setattr(args, 'cand_k', args.cand_k if args.cand_k is not None else 200)
+        if hasattr(args, 'explain_top_n'):
+            setattr(args, 'explain_top_n', args.explain_top_n if args.explain_top_n is not None else 10)
     elif preset == 'debug':
-        setattr(args, 'limit', args.limit if args.limit is not None else 200)
-        setattr(args, 'top_k', args.top_k if args.top_k is not None else 10)
+        if hasattr(args, 'limit'):
+            setattr(args, 'limit', args.limit if args.limit is not None else 200)
+        if hasattr(args, 'top_k'):
+            setattr(args, 'top_k', args.top_k if args.top_k is not None else 10)
 
 
 def main():
@@ -97,9 +101,9 @@ def main():
     args = ap.parse_args()
 
     if args.cmd == 'build':
+        apply_preset(ap, args.preset, args)
         if args.no_ann and (args.limit is None or args.limit > 50000):
             ap.error('--no-ann is not allowed when limit > 50k')
-        apply_preset(ap, args.preset, args)
         build_pipeline(
             ndjson_path=args.ndjson,
             out_dir=args.out_dir,
