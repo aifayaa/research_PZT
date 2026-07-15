@@ -59,15 +59,19 @@ class PZTV2AlignmentScoringTests(unittest.TestCase):
         degraded = replace(identity, total_edit_cost=identity.total_edit_cost + 1.0)
         self.assertLess(score_alignment(degraded)[0].raw_transferability, baseline)
 
-    def test_direction_is_recorded_and_can_change_normalization(self):
+    def test_direction_is_recorded_and_changes_target_conservation(self):
         source, target = self._case("02_tomato_vs_chopped_tomato.json")
         forward = align_recipe_graphs(source, target)
         reverse = align_recipe_graphs(target, source)
         self.assertEqual(forward.source_recipe_id, source.recipe_id)
         self.assertEqual(reverse.source_recipe_id, target.recipe_id)
-        self.assertNotEqual(
+        self.assertEqual(
             score_alignment(forward)[0].normalized_edit_distance,
             score_alignment(reverse)[0].normalized_edit_distance,
+        )
+        self.assertNotEqual(
+            score_alignment(forward)[0].raw_transferability,
+            score_alignment(reverse)[0].raw_transferability,
         )
 
 

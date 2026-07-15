@@ -35,7 +35,8 @@ class PZTScore:
 def score_alignment(alignment: GraphAlignment) -> tuple[TransferabilityScore, PZTScore]:
     target_count = alignment.target_unit_count
     conservation = 1.0 if target_count == 0 else alignment.preserved_unit_count / target_count
-    normalized_distance = 0.0 if target_count == 0 else min(1.0, alignment.total_edit_cost / target_count)
+    total_units = alignment.source_unit_count + alignment.target_unit_count
+    normalized_distance = 0.0 if total_units == 0 else min(1.0, alignment.total_edit_cost / total_units)
     raw = _clamp01(conservation * (1.0 - normalized_distance))
     novelty = normalized_distance
     useful = _clamp01(raw * novelty)

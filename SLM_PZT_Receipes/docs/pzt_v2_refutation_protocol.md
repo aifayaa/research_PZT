@@ -28,9 +28,9 @@ with other validated aliases. An unvalidated surface receives a deterministic
 inventing a semantic merge. Later clustering may propose merges but cannot
 activate them without explicit validation and must-not-link checks.
 
-## Frozen score contract v0.1
+## Frozen score contract v0.2
 
-Contract identifier: `pzt-v2-equal-unit-edits/v0.1`.
+Contract identifier: `pzt-v2-equal-unit-edits/v0.2`.
 
 The graph alignment treats typed nodes and typed edges as auditable units.
 
@@ -46,7 +46,7 @@ For a directional alignment `source -> target`:
 
 ```text
 C = preserved_target_units / target_units
-D_norm = min(1, total_edit_cost / target_units)
+D_norm = min(1, total_edit_cost / (source_units + target_units))
 T_raw = C * (1 - D_norm)
 N = D_norm
 PZT_score = T_raw * N
@@ -56,6 +56,13 @@ PZT_score = T_raw * N
 maximal raw transferability and zero novelty-adjusted PZT. These equal costs are
 a pre-registered, deliberately simple first hypothesis; they must not be tuned
 on the first human evaluation set.
+
+Version `v0.1` divided the edit cost only by target units. Its first 10K run was
+refuted by a degenerate output distribution (median zero and near-zero 75th
+percentile). Version `v0.2` uses the complete source-plus-target unit universe,
+the maximum explicit delete-all/insert-all support of the edit script. A 1K+
+pair run now hard-fails when more than 25% of raw scores are zero, fewer than 100
+distinct values remain at eight decimals, or `p90 <= p25`.
 
 ## Required implementation refutations
 

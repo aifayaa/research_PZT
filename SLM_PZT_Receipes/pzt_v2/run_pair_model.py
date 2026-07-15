@@ -16,7 +16,7 @@ from .parsing import parse_ndjson
 from .scoring import score_alignment
 
 
-SCORE_CONTRACT_VERSION = "pzt-v2-equal-unit-edits/v0.1"
+SCORE_CONTRACT_VERSION = "pzt-v2-equal-unit-edits/v0.2"
 
 
 def main() -> None:
@@ -109,6 +109,10 @@ def main() -> None:
         "raw_transferability": _distribution(raw_scores),
         "pzt_score": _distribution(useful_scores),
         "edit_cost": _distribution(edit_costs),
+        "raw_zero_fraction": (
+            sum(value == 0.0 for value in raw_scores) / len(raw_scores) if raw_scores else 1.0
+        ),
+        "raw_unique_value_count_8dp": len({round(value, 8) for value in raw_scores}),
     }
     report_path = args.output_dir / "pair_model_report.json"
     report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -121,6 +125,16 @@ def main() -> None:
         failures.append(f"insufficient_available_pairs:{available}<{requested}")
     if written != requested:
         failures.append(f"pair_count_mismatch:{written}!={requested}")
+    if written >= 1000:
+        if report["raw_zero_fraction"] > 0.25:
+            failures.append(f"degenerate_zero_fraction:{report['raw_zero_fraction']:.6f}>0.25")
+        if report["raw_unique_value_count_8dp"] < 100:
+            failures.append(
+                f"insufficient_score_resolution:{report['raw_unique_value_count_8dp']}<100"
+            )
+        raw_distribution = report["raw_transferability"]
+        if raw_distribution.get("p90", 0.0) <= raw_distribution.get("p25", 0.0):
+            failures.append("non_separating_score_distribution:p90<=p25")
     manifest = create_manifest(
         run_id=args.run_id,
         stage="pair_scoring",
@@ -135,7 +149,14 @@ def main() -> None:
             "retrieval": "deterministic_exact_selected_pairs",
         },
         metrics=report,
-        thresholds={"graph_errors": 0, "pair_errors": 0, "pairs_written": requested},
+        thresholds={
+            "graph_errors": 0,
+            "pair_errors": 0,
+            "pairs_written": requested,
+            "raw_zero_fraction_max": 0.25,
+            "raw_unique_value_count_8dp_min": 100,
+            "raw_distribution": "p90>p25",
+        },
         failure_reasons=failures,
         root=Path.cwd(),
     )
